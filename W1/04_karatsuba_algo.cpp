@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <fstream>
 #include <sstream>
 using namespace std;
 
@@ -48,8 +49,14 @@ string karatsuba(string a, string b) {
 
 int main() {
     string a, b;
-    cin >> a >> b;
-    cout << karatsuba(a, b) << endl;
+
+    ifstream ipFile("input4.txt");
+    if (ipFile.is_open()) {
+        ipFile >> a >> b;
+        cout << karatsuba(a, b) << endl;
+        ipFile.close();
+    }
+    else cout << "Cannot open file" << endl;
 
     return 0;
 }

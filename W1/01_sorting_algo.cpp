@@ -20,6 +20,25 @@ class Sorting {
         delete[] ans;
     }
 
+    int partition(int *arr, int low, int high) {
+        int pivot = arr[low];
+        int i = low + 1, j = high;
+
+        do {
+            while(i <= high && arr[i] <= pivot) i++;
+            while(j >= low && arr[j] > pivot) j--;
+            if(i < j) {
+                int tmp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = tmp;
+            }
+        } while(i < j);
+        arr[low] = arr[j];
+        arr[j] = pivot;
+
+        return j;
+    }
+
 public:
     void print(int const *arr, int low, int high) {
         for(int i=low; i<=high; i++) cout << arr[i] << " ";
@@ -80,6 +99,14 @@ public:
         this->merge(arr, low, mid, high);
         this->print(arr, fixLow, fixHigh);
     }
+
+    void quickSort(int *arr, int low, int high, int fixLow, int fixHigh) {
+        if(low >= high) return;
+        int pivot = partition(arr, low, high);
+        quickSort(arr, low, pivot - 1, fixLow, fixHigh);
+        quickSort(arr, pivot + 1, high, fixLow, fixHigh);
+        this->print(arr, fixLow, fixHigh);
+    }
 };
 
 int *inputFromFile(string filename) {
@@ -119,6 +146,7 @@ int inputMenu() {
     cout << "Enter 1 for insertion sort." << endl;
     cout << "Enter 2 for selection sort." << endl;
     cout << "Enter 3 for merge sort." << endl;
+    cout << "Enter 4 for quick sort." << endl;
     cin >> menu;
     return menu;
 }
@@ -128,7 +156,7 @@ int main() {
     int *arr = inputFromFile("input1.txt");
 
     int menu = inputMenu();
-    while(menu < 0 || menu > 3) {
+    while(menu < 0 || menu > 4) {
         cout << "Incorrect Value." << endl;
         menu = inputMenu();
     }
@@ -146,7 +174,10 @@ int main() {
             break;
         case 3:
             s1.mergeSort(arr, 1, arr[0], 1, arr[0]);
-            break;    
+            break;
+        case 4:
+            s1.quickSort(arr, 1, arr[0], 1, arr[0]);
+            break;
         default:
             break;
     }

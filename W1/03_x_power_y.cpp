@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 double calcPower(int x, int y) {
@@ -14,8 +15,14 @@ double calcPower(int x, int y) {
 
 int main() {
     int x, y;
-    cin >> x >> y;
-    cout << calcPower(x, y) << endl;
+
+    ifstream ipFile("input3.txt");
+    if (ipFile.is_open()) {
+        ipFile >> x >> y;
+        cout << calcPower(x, y) << endl;
+        ipFile.close();
+    }
+    else cout << "Cannot open file" << endl;
 
     return 0;
 }
